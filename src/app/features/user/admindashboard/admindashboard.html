@@ -1,0 +1,53 @@
+<div class="flex min-h-screen bg-gray-100">
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8">
+
+    <!-- Page Title -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">
+      Admin Dashboard
+    </h1>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Total Users -->
+      <div class="bg-white p-6 rounded shadow text-center">
+        <p class="text-gray-500">Total Users</p>
+        <p class="text-3xl font-bold text-blue-600">25</p>
+      </div>
+
+      <!-- Active Users -->
+      <div class="bg-white p-6 rounded shadow text-center">
+        <p class="text-gray-500">Active Users</p>
+        <p class="text-3xl font-bold text-green-600">22</p>
+      </div>
+
+      <!-- Inactive Users -->
+      <div class="bg-white p-6 rounded shadow text-center">
+        <p class="text-gray-500">Inactive Users</p>
+        <p class="text-3xl font-bold text-red-600">3</p>
+      </div>
+
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="mt-8 space-x-4">
+      <button
+        routerLink="/users"
+        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+      >
+        View All Users
+      </button>
+
+      <button
+        routerLink="/profile"
+        class="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700"
+      >
+        My Profile
+      </button>
+    </div>
+
+  </main>
+
+</div>
