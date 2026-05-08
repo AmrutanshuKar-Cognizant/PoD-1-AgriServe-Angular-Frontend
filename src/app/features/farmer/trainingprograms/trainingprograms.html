@@ -1,0 +1,62 @@
+<!-- Training Programs -->
+<div class="training-page">
+ 
+  <div class="page-header">
+    <h1 class="page-title">Training Programs</h1>
+    <p class="page-subtitle">Browse and register for upcoming agricultural training programs.</p>
+  </div>
+ 
+  <div *ngIf="loading" class="state-card">
+    <p>Loading training programs...</p>
+  </div>
+ 
+  <div *ngIf="!loading && programs.length === 0" class="state-card">
+    <p>No training programs available right now.</p>
+  </div>
+ 
+  <div class="programs-list" *ngIf="!loading && programs.length > 0">
+    <div class="program-card" *ngFor="let p of programs">
+ 
+      <div class="program-top">
+        <div class="program-top-left">
+          <span class="cat-tag" [ngClass]="getCategoryClass(p.category)">{{ p.category }}</span>
+          <h3 class="program-title">{{ p.title }}</h3>
+        </div>
+        <button class="register-btn" [disabled]="p.status === 'Completed'">
+          <i class="ti ti-circle-check" aria-hidden="true"></i>
+          Register
+        </button>
+      </div>
+ 
+      <p class="program-desc">{{ p.description }}</p>
+ 
+      <div class="program-meta">
+        <span class="meta-item">
+          <i class="ti ti-user" aria-hidden="true"></i>
+          Instructor: {{ p.instructor }}
+        </span>
+        <span class="meta-item">
+          <i class="ti ti-map-pin" aria-hidden="true"></i>
+          {{ p.location }}
+        </span>
+        <span class="meta-item">
+          <i class="ti ti-calendar" aria-hidden="true"></i>
+          {{ formatDateRange(p.startDate, p.endDate) }}
+        </span>
+        <span class="meta-item">
+          <i class="ti ti-clock" aria-hidden="true"></i>
+          {{ p.time }}
+        </span>
+      </div>
+ 
+      <div class="seats-row">
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="getProgressPercentage(p.seatsFilled, p.seatsTotal)"></div>
+        </div>
+        <span class="seats-label">{{ p.seatsFilled }}/{{ p.seatsTotal }} seats filled</span>
+      </div>
+ 
+    </div>
+  </div>
+ 
+</div>

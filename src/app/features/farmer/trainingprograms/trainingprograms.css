@@ -1,0 +1,187 @@
+.training-page { max-width: 860px; }
+ 
+.page-header   { margin-bottom: 22px; }
+.page-title    { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+.page-subtitle { font-size: 13px; color: var(--text-secondary); }
+ 
+/* ── State boxes (loading / error / empty) ── */
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 24px;
+  background: var(--bg-white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: var(--text-secondary);
+}
+ 
+.state-box i    { font-size: 38px; color: var(--gray-200); }
+.state-box p    { font-size: 14px; font-weight: 500; }
+.state-box small{ font-size: 12px; color: var(--text-muted); }
+.error-box i    { color: var(--red-light); }
+ 
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; display: inline-block; }
+ 
+/* ── Programs list ── */
+.programs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+ 
+/* ── Program card ── */
+.program-card {
+  background: var(--bg-white);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+ 
+.program-card:hover {
+  border-color: var(--green-mid);
+  box-shadow: var(--shadow-sm);
+}
+ 
+/* Card header */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+ 
+.card-header-left { flex: 1; min-width: 0; }
+ 
+.program-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+ 
+.program-instructor {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+ 
+.program-instructor i { font-size: 13px; }
+.instructor-sep       { color: var(--gray-200); }
+.program-location-inline { color: var(--text-muted); }
+ 
+/* Meta chips row */
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+ 
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 9px;
+}
+ 
+.meta-chip i { font-size: 12px; }
+ 
+/* Category chips */
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: auto;
+}
+ 
+.cat-crop-management  { background: var(--green-light);  color: var(--green-dark); }
+.cat-water-management { background: var(--blue-light);   color: var(--blue); }
+.cat-organic-farming  { background: #EAF3DE;             color: #3B6B1A; }
+.cat-soil-health      { background: #FFF3E0;             color: #8B4513; }
+.cat-technology       { background: var(--blue-light);   color: var(--blue); }
+ 
+/* Description */
+.program-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+ 
+/* Seats section */
+.seats-section { margin-bottom: 14px; }
+ 
+.seats-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+ 
+.seats-count strong { color: var(--text-primary); }
+ 
+.progress-bar {
+  height: 6px;
+  background: var(--gray-50);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 0.5px solid var(--border);
+}
+ 
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+ 
+.progress-fill.fill-warn   { background: var(--amber); }
+.progress-fill.fill-danger { background: var(--red); }
+ 
+.seats-pct {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+}
+ 
+/* Card footer */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--border);
+}
+ 
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+ 
+.footer-meta i { font-size: 14px; }

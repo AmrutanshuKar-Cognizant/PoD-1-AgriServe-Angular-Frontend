@@ -1,0 +1,123 @@
+<div class="upload-page">
+ 
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Upload Document</h1>
+      <p class="page-subtitle">Submit a document for verification review by the AgriServe team.</p>
+    </div>
+    <a routerLink="/documents" class="btn btn-sm">
+      <i class="ti ti-arrow-left" aria-hidden="true"></i>
+      Back to Documents
+    </a>
+  </div>
+ 
+  <!-- Success Toast -->
+  <div *ngIf="submitted" class="success-banner" role="alert">
+    <i class="ti ti-circle-check" aria-hidden="true"></i>
+    Document submitted successfully! Redirecting to your documents...
+  </div>
+ 
+  <!-- Form Card -->
+  <div class="card upload-card">
+ 
+    <div class="form-layout">
+ 
+      <!-- Left: Form fields -->
+      <div class="form-fields">
+ 
+        <!-- Farmer ID (read-only) -->
+        <div class="form-group">
+          <label class="form-label" for="farmerId">Farmer ID</label>
+          <input
+            id="farmerId"
+            class="form-control"
+            type="text"
+            [value]="farmerId"
+            readonly
+          />
+          <span class="form-hint">Your registered farmer ID</span>
+        </div>
+ 
+        <!-- Document type -->
+        <div class="form-group">
+          <label class="form-label" for="docType">Document Type <span class="required">*</span></label>
+          <select
+            id="docType"
+            class="form-control"
+            [(ngModel)]="documentType"
+            name="documentType"
+          >
+            <option value="" disabled>Select document type...</option>
+            <option *ngFor="let type of documentTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+ 
+        <!-- File upload -->
+        <div class="form-group">
+          <label class="form-label">File <span class="required">*</span></label>
+ 
+          <label class="upload-zone" [class.has-file]="selectedFile" for="fileInput">
+            <ng-container *ngIf="!selectedFile">
+              <i class="ti ti-cloud-upload upload-icon" aria-hidden="true"></i>
+              <p class="upload-text">Click to browse or drag & drop</p>
+              <small class="upload-hint">Supports PDF, JPG, PNG · Max 10 MB</small>
+            </ng-container>
+            <ng-container *ngIf="selectedFile">
+              <i class="ti ti-file-check upload-icon success-icon" aria-hidden="true"></i>
+              <p class="upload-text file-name">{{ selectedFile.name }}</p>
+              <small class="upload-hint">{{ fileSizeLabel }} · Click to change</small>
+            </ng-container>
+          </label>
+ 
+          <input
+            id="fileInput"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            (change)="onFileChange($event)"
+            class="file-input-hidden"
+          />
+ 
+          <p *ngIf="fileError" class="error-text">
+            <i class="ti ti-alert-circle" aria-hidden="true"></i>
+            {{ fileError }}
+          </p>
+        </div>
+ 
+        <!-- Actions -->
+        <div class="form-actions">
+          <button
+            class="btn btn-primary"
+            [disabled]="!isValid() || submitting"
+            (click)="onSubmit()"
+          >
+            <i class="ti" [ngClass]="submitting ? 'ti-loader' : 'ti-upload'" aria-hidden="true"></i>
+            {{ submitting ? 'Submitting...' : 'Submit Document' }}
+          </button>
+          <button class="btn" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+ 
+      </div>
+ 
+      <!-- Right: Info panel -->
+      <div class="info-panel">
+        <h3 class="info-title">Accepted Documents</h3>
+        <ul class="doc-type-list">
+          <li *ngFor="let type of documentTypes">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+            {{ type }}
+          </li>
+        </ul>
+        <div class="info-divider"></div>
+        <div class="info-note">
+          <i class="ti ti-info-circle" aria-hidden="true"></i>
+          <p>Uploaded documents are reviewed within <strong>3–5 business days</strong>. You'll see the status updated in My Documents.</p>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+</div>

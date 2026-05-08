@@ -1,0 +1,95 @@
+<div class="docs-page">
+ 
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Documents</h1>
+      <p class="page-subtitle">Uploaded verification documents and their review status.</p>
+    </div>
+    <a routerLink="/documents/upload" class="btn btn-primary">
+      <i class="ti ti-upload" aria-hidden="true"></i>
+      Upload New Document
+    </a>
+  </div>
+ 
+  <!-- Stats -->
+  <div class="doc-stats">
+    <div class="stat-card">
+      <span class="stat-label">Total Uploaded</span>
+      <span class="stat-value">{{ documents.length }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Accepted</span>
+      <span class="stat-value accepted">{{ accepted }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Pending Review</span>
+      <span class="stat-value pending">{{ pending }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Rejected</span>
+      <span class="stat-value rejected">{{ rejected }}</span>
+    </div>
+  </div>
+ 
+  <!-- Document List -->
+  <div class="card">
+    <div class="section-title">Uploaded Documents</div>
+ 
+    <!-- Loading -->
+    <div *ngIf="loading" class="empty-state">
+      <i class="ti ti-loader" aria-hidden="true"></i>
+      <p>Loading documents...</p>
+    </div>
+ 
+    <!-- Empty -->
+    <div *ngIf="!loading && documents.length === 0" class="empty-state">
+      <i class="ti ti-files-off" aria-hidden="true"></i>
+      <p>No documents uploaded yet</p>
+      <small>Upload your first document to get started</small>
+    </div>
+ 
+    <!-- List -->
+    <div *ngIf="!loading && documents.length > 0">
+      <div
+        *ngFor="let doc of documents; let last = last"
+        class="doc-item"
+        [class.last]="last"
+      >
+        <!-- Icon -->
+        <div class="doc-icon" [ngClass]="getDocIconBg(doc.docType)">
+          <i class="ti {{ getDocIcon(doc.docType) }}" aria-hidden="true"></i>
+        </div>
+ 
+        <!-- Info -->
+        <div class="doc-info">
+          <h4 class="doc-name">{{ doc.docType }}</h4>
+          <p class="doc-meta">
+            Uploaded: {{ formatDate(doc.uploadedDate) }}
+            &nbsp;·&nbsp;
+            ID: DOC-{{ doc.documentId }}
+          </p>
+        </div>
+ 
+        <!-- Actions -->
+        <div class="doc-actions">
+          <span class="badge" [ngClass]="getStatusClass(doc.verificationStatus)">
+            <i class="ti"
+               [ngClass]="{
+                 'ti-circle-check': doc.verificationStatus === 'Accepted',
+                 'ti-clock':        doc.verificationStatus === 'Pending',
+                 'ti-circle-x':     doc.verificationStatus === 'Rejected'
+               }"
+               aria-hidden="true">
+            </i>
+            {{ doc.verificationStatus }}
+          </span>
+          <button class="btn btn-sm btn-icon" title="Download">
+            <i class="ti ti-download" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</div>

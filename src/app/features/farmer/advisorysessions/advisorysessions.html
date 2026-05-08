@@ -1,0 +1,85 @@
+<div class="advisory-page">
+ 
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Advisory Sessions</h1>
+      <p class="page-subtitle">Expert guidance articles and resources curated for farmers.</p>
+    </div>
+  </div>
+ 
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-box">
+    <i class="ti ti-loader-2 spin" aria-hidden="true"></i>
+    <p>Loading advisory content...</p>
+  </div>
+ 
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="state-box error-box">
+    <i class="ti ti-alert-circle" aria-hidden="true"></i>
+    <p>Failed to load advisory content. Please try again.</p>
+  </div>
+ 
+  <!-- Empty -->
+  <div *ngIf="!loading && !error && advisoryList.length === 0" class="state-box">
+    <i class="ti ti-book-off" aria-hidden="true"></i>
+    <p>No advisory content available right now.</p>
+    <small>Check back soon for new articles.</small>
+  </div>
+ 
+  <!-- Advisory cards -->
+  <div *ngIf="!loading && !error && advisoryList.length > 0" class="advisory-grid">
+ 
+    <div *ngFor="let item of advisoryList" class="advisory-card">
+ 
+      <!-- Card body -->
+      <div class="advisory-body">
+ 
+        <!-- Thumbnail icon -->
+        <div
+          class="advisory-thumb"
+          [style.background]="getThumbBg(item.category)"
+          [style.color]="getThumbColor(item.category)"
+        >
+          <i class="ti {{ getCategoryIcon(item.category) }}" aria-hidden="true"></i>
+        </div>
+ 
+        <!-- Content -->
+        <div class="advisory-content">
+          <div class="advisory-top">
+            <span class="cat-chip {{ getCategoryClass(item.category) }}">
+              {{ item.category }}
+            </span>
+          </div>
+          <h3 class="advisory-title">{{ item.title }}</h3>
+          <p class="advisory-desc">{{ item.description }}</p>
+        </div>
+ 
+      </div>
+ 
+      <!-- Card footer -->
+      <div class="advisory-footer">
+        <div class="footer-meta">
+          <span class="meta-item">
+            <i class="ti ti-calendar" aria-hidden="true"></i>
+            {{ formatDate(item.publishedDate) }}
+          </span>
+          <span class="meta-item">
+            <i class="ti ti-file-text" aria-hidden="true"></i>
+            {{ item.pages }} pages
+          </span>
+          <span class="meta-item status-chip">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+            {{ item.status }}
+          </span>
+        </div>
+        <button class="btn btn-sm btn-primary">
+          <i class="ti ti-download" aria-hidden="true"></i>
+          Download PDF
+        </button>
+      </div>
+ 
+    </div>
+ 
+  </div>
+</div>

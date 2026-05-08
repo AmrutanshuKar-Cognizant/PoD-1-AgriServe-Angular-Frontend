@@ -1,0 +1,203 @@
+.dashboard-page { max-width: 1100px; }
+ 
+/* ── Page Header ── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  gap: 12px;
+}
+ 
+.page-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+ 
+.page-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+ 
+/* ── Stats Grid ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+ 
+.stat-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  border: 0.5px solid var(--border);
+}
+ 
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+ 
+.stat-value {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.1;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+ 
+.stat-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+ 
+.crop-value  { font-size: 18px; }
+.farmer-id   { font-size: 16px; font-family: monospace; letter-spacing: 0.5px; }
+ 
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+ 
+/* ── Two-column layout ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+}
+ 
+/* ── Workshops ── */
+.workshop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+ 
+.workshop-item.last { border-bottom: none; padding-bottom: 0; }
+ 
+.date-box {
+  width: 44px;
+  height: 44px;
+  background: var(--green-light);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+ 
+.date-day {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--green-dark);
+  line-height: 1;
+}
+ 
+.date-mon {
+  font-size: 9px;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+ 
+.workshop-body { flex: 1; min-width: 0; }
+ 
+.workshop-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.workshop-location {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+ 
+.workshop-location i { font-size: 12px; }
+ 
+.workshop-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+ 
+.meta-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+ 
+.meta-chip i { font-size: 11px; }
+ 
+/* ── Profile table ── */
+.profile-table { margin-bottom: 14px; }
+ 
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 0.5px solid var(--border);
+  gap: 12px;
+}
+ 
+.profile-row.last { border-bottom: none; }
+ 
+.profile-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+ 
+.profile-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+}
+ 
+.profile-value.monospace { font-family: monospace; font-size: 12px; letter-spacing: 0.3px; }
+.profile-value.address { font-size: 12px; font-weight: 400; max-width: 220px; line-height: 1.4; }
+ 
+.profile-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+ 
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col    { grid-template-columns: 1fr; }
+}
+ 
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
