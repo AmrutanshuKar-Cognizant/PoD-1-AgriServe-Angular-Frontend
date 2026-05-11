@@ -82,8 +82,6 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard], data: { roles: ['EXTENSIONOFFICER']} },
   { path: 'officer/advisory/session', component: SessionPortalComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['EXTENSIONOFFICER']} },
-  { path: 'officer/advisory/upload', component: ContentUploadComponent, 
-    canActivate: [authGuard, roleGuard], data: { roles: ['EXTENSIONOFFICER']} },
   { path: 'officer/attendance/:id', component: AttendancedetailsComponent,
     canActivate: [authGuard, roleGuard], data: { roles: ['EXTENSIONOFFICER']} },
 
@@ -91,6 +89,10 @@ export const routes: Routes = [
   { path: 'managerdashboard', component: ProgrammanagerdashboardComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['PROGRAMMANAGER']} },
   { path: 'manager/programdetails/:id', component: ProgramdetailsComponent,
+    canActivate: [authGuard, roleGuard], data: { roles: ['PROGRAMMANAGER']} },
+  { path: 'manager/advisory/upload', component: ContentUploadComponent, 
+    canActivate: [authGuard, roleGuard], data: { roles: ['PROGRAMMANAGER']} },
+  { path: 'manager/advisory/content', component: ContentLibraryComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['PROGRAMMANAGER']} },
   
 ];

@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core'; // 👈 added inject
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // 👈 added Router import
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SidebarComponent } from '../../../features/shared/sidebar/sidebar';
@@ -18,12 +19,15 @@ import { AdvisoryService } from '../../../core/services/advisory/advisory';
 })
 export class OfficerDashboardComponent implements OnInit, OnDestroy {
   officerName = '';
-  workshops: any[] = []; // Array to hold backend workshop data
+  workshops: any[] = []; 
 
   isLoading = true;
   errorMessage = '';
 
   private destroy$ = new Subject<void>();
+  
+  // 👇 NEW: Inject the router
+  private router = inject(Router);
 
   constructor(
     private advisoryService: AdvisoryService,
@@ -38,12 +42,9 @@ export class OfficerDashboardComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.cdr.detectChanges();
 
-    // 1. Fetch Officer details from LocalStorage
     this.officerName = localStorage.getItem('name') || 'Officer';
-    
     const currentOfficerId = Number(localStorage.getItem('user_id'));
 
-    // 2. Fetch Assigned Workshops using the dynamic ID
     this.advisoryService.getMyWorkshops(currentOfficerId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -59,6 +60,14 @@ export class OfficerDashboardComponent implements OnInit, OnDestroy {
           this.cdr.detectChanges();
         }
       });
+  }
+
+  // 👇 NEW: Navigation Method
+  openAttendanceDetails(workshopId: number): void {
+    // ⚠️ NOTE: Make sure this path matches your app.routes.ts exactly!
+    // If your route is 'officer/advisory/session/:id', update the string below to match.
+    console.log('Navigating to Workshop ID:', workshopId);
+    this.router.navigate(['/officer/attendance', workshopId]);
   }
 
   ngOnDestroy(): void {

@@ -84,17 +84,19 @@
                   </td>
 
                   <td class="px-6 py-4">
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium" 
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border" 
                           [ngClass]="getStatusClass(user.status)">
-                      <span *ngIf="user.status?.toUpperCase() === 'ACTIVE'" class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                      {{ user.status }}
+                      
+                      <span *ngIf="isActive(user.status)" class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      
+                      {{ user.status || 'Active' }}
                     </span>
                   </td>
 
                   <td class="px-6 py-4 text-right">
                     <div class="flex justify-end gap-2">
                       
-                      <button *ngIf="user.status?.toUpperCase() !== 'INACTIVE'" 
+                      <button *ngIf="canDeactivate(user.status)" 
                               (click)="onDeactivate(user.userId || user.userId)"
                               class="inline-flex items-center gap-1 px-3 py-1.5 text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-md transition-colors text-xs font-bold shadow-sm" 
                               title="Deactivate User">

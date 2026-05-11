@@ -9,7 +9,6 @@ import { SystemUser } from '../../../models/admin.models';
 @Component({
   selector: 'app-all-users',
   standalone: true,
-  // 👇 Restored Sidebar and Header imports
   imports: [CommonModule, RouterLink, SidebarComponent, HeaderComponent],
   templateUrl: './allusers.html'
 })
@@ -54,7 +53,7 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  // 👇 Deactivate Logic
+  // Deactivate Logic
   onDeactivate(userId: number): void {
     if (!confirm('Are you sure you want to deactivate this user? They will lose login access.')) return;
 
@@ -74,7 +73,7 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  // 👇 Delete Logic
+  // Delete Logic
   onDelete(userId: number): void {
     if (!confirm('Warning: Are you sure you want to permanently delete this user? This cannot be undone.')) return;
 
@@ -91,17 +90,36 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  // --- UI Formatting Helpers ---
-  getStatusClass(status: string): string {
-    const s = status?.toUpperCase() || '';
+
+  // Safe Status Check
+  getStatusClass(status: string | null | undefined): string {
+    if (!status) return 'bg-gray-100 text-gray-600 border-gray-200'; // Fallback for null
+    
+    const s = status.toUpperCase();
     if (s === 'ACTIVE') return 'bg-green-100 text-green-800';
     if (s === 'INACTIVE' || s === 'SUSPENDED') return 'bg-red-100 text-red-800';
     if (s === 'PENDING') return 'bg-amber-100 text-amber-800';
+    
     return 'bg-gray-100 text-gray-800';
   }
 
-  getRoleBadgeClass(role: string): string {
-    const r = role?.toUpperCase() || '';
+  // Safe Deactivate Check (Moves logic out of HTML)
+  canDeactivate(status: string | null | undefined): boolean {
+    if (!status) return true; // If status is null, allow deactivation
+    return status.toUpperCase() !== 'INACTIVE';
+  }
+
+  // Safe Active Dot Check
+  isActive(status: string | null | undefined): boolean {
+    if (!status) return true; // Assuming null means active by default
+    return status.toUpperCase() === 'ACTIVE';
+  }
+
+  // Safe Role check
+  getRoleBadgeClass(role: string | null | undefined): string {
+    if (!role) return 'bg-gray-50 text-gray-700 border-gray-200';
+    
+    const r = role.toUpperCase();
     if (r === 'ADMIN') return 'bg-purple-50 text-purple-700 border-purple-200';
     if (r === 'FARMER') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
     if (r === 'MANAGER' || r === 'PROGRAMMANAGER') return 'bg-indigo-50 text-indigo-700 border-indigo-200';
@@ -111,13 +129,13 @@ export class AllUsersComponent implements OnInit {
     return 'bg-gray-50 text-gray-700 border-gray-200'; 
   }
 
-  formatRoleName(role: string): string {
-    const r = role?.toUpperCase() || '';
+  formatRoleName(role: string | null | undefined): string {
+    if (!role) return 'Unknown Role';
+    
+    const r = role.toUpperCase();
     if (r === 'EXTENSIONOFFICER' || r === 'EXTENSION_OFFICER') return 'Extension Officer';
     if (r === 'PROGRAMMANAGER') return 'Program Manager';
     if (r === 'COMPLIANCEOFFICER') return 'Compliance Officer';
-    if (r === 'FARMER') return 'Farmer';
-    if (r === 'ADMIN') return 'Admin';
     
     return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
   }

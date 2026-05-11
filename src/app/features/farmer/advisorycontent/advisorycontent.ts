@@ -1,7 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-
 import { SidebarComponent } from '../../../features/shared/sidebar/sidebar'; 
 import { HeaderComponent } from '../../../features/shared/header/header';
 
@@ -9,12 +7,12 @@ import { FarmerService } from '../../../core/services/farmer/farmer';
 import { AdvisoryContent } from '../../../models/farmer.models';
  
 @Component({
-  selector: 'app-advisory-content', // 👈 Updated to match file
+  selector: 'app-advisory-content', 
   standalone: true,
-  imports: [CommonModule, RouterLink, SidebarComponent, HeaderComponent],
-  templateUrl: './advisorycontent.html' // 👈 Updated to match file
+  imports: [CommonModule, SidebarComponent, HeaderComponent],
+  templateUrl: './advisorycontent.html' 
 })
-export class AdvisoryContentComponent implements OnInit { // 👈 Updated Class Name
+export class AdvisoryContentComponent implements OnInit { 
   
   advisoryList: AdvisoryContent[] = [];
   loading = true;
@@ -46,19 +44,18 @@ export class AdvisoryContentComponent implements OnInit { // 👈 Updated Class 
         }
         
         this.loading = false;
-        this.cdr.detectChanges(); // 🔥 Force UI Redraw
+        this.cdr.detectChanges(); 
       },
       error: (err: any) => {
         console.error('❌ Failed to load advisory content', err);
         this.error = true;
         this.loading = false;
         this.advisoryList = [];
-        this.cdr.detectChanges(); // 🔥 Force UI Redraw
+        this.cdr.detectChanges(); 
       },
     });
   }
  
-  // --- UI Formatting Helpers ---
 
   formatDate(date: any): string {
     if (!date) return 'N/A';
@@ -79,7 +76,7 @@ export class AdvisoryContentComponent implements OnInit { // 👈 Updated Class 
     if (cat.includes('pest')) return 'bg-red-100 text-red-800';
     if (cat.includes('market')) return 'bg-purple-100 text-purple-800';
     
-    return 'bg-gray-100 text-gray-800'; // Fallback
+    return 'bg-gray-100 text-gray-800';
   }
  
   getCategoryIcon(category: string): string {
@@ -121,18 +118,15 @@ export class AdvisoryContentComponent implements OnInit { // 👈 Updated Class 
   downloadDocument(uri: string | undefined): void {
     if (!uri || uri.trim() === '') {
       console.warn('No file URI available for this document.');
-      // Optional: You could set an error message variable here to show a toast/alert
       return;
     }
 
     let finalUrl = uri.trim();
     
-    // Fix the "Relative URL Trap" if the database string is missing https://
     if (!/^https?:\/\//i.test(finalUrl)) {
       finalUrl = 'https://' + finalUrl;
     }
 
-    // Open the file link securely
     window.open(finalUrl, '_blank', 'noopener,noreferrer');
   }
 }

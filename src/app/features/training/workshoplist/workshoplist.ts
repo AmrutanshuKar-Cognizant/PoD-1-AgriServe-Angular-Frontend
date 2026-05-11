@@ -1,13 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { SidebarComponent } from '../../../features/shared/sidebar/sidebar';
-import { HeaderComponent } from '../../../features/shared/header/header';
 import { Workshop } from '../../../models/training.models';
 
 @Component({
   selector: 'app-workshop-list',
   standalone: true,
-  imports: [CommonModule, DatePipe, SidebarComponent, HeaderComponent],
+  imports: [CommonModule, DatePipe],
   templateUrl: './workshoplist.html'
 })
 export class WorkshopListComponent {

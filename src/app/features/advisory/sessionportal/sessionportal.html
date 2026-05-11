@@ -30,8 +30,8 @@
                           class="w-full p-3 rounded-lg border bg-slate-50 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-slate-700 text-sm"
                           [ngClass]="{'border-red-300 focus:ring-red-500': f['farmerId'].invalid && f['farmerId'].touched, 'border-slate-200': !(f['farmerId'].invalid && f['farmerId'].touched)}">
                     <option [value]="0" disabled selected>Choose a Farmer...</option>
-                    <option *ngFor="let f of farmers" [value]="f.id">
-                      {{f.name}} (ID: {{f.id}})
+                    <option *ngFor="let f of farmers" [value]="f.farmerId">
+                      {{f.name}} (ID: {{f.farmerId}})
                     </option>
                   </select>
                   <p *ngIf="f['farmerId'].invalid && f['farmerId'].touched" class="text-red-500 text-xs mt-1.5 font-medium">Please select a valid farmer.</p>
@@ -115,7 +115,7 @@
                 </svg>
               </div>
               
-              <div *ngIf="recentSessions?.length === 0" class="text-center py-6 text-sm text-slate-500">
+              <div *ngIf="recentSessions.length === 0" class="text-center py-6 text-sm text-slate-500">
                 No recent activities found.
               </div>
             </div>

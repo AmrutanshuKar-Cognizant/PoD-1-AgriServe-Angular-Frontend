@@ -14,6 +14,7 @@ export interface Workshop {
   workshopId: number;
   programId: number;
   programTitle: string;
+  title: string;
   location: string;
   date: any;
   status: string;

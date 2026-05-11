@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,28 +8,31 @@ import { AuditPayload } from '../../../models/compliance.models';
 @Component({
   selector: 'app-auditform',
   standalone: true,
-  imports: [CommonModule, FormsModule], // MUST include FormsModule for ngModel
+  imports: [CommonModule, FormsModule],
   templateUrl: './auditform.html'
 })
 export class AuditformComponent {
   
-  // Initialize the empty payload based on your interface
   auditData: AuditPayload = {
     scope: '',
     findings: '',
-    status: 'PENDING' // Default status
+    status: 'PENDING'
   };
 
   isSubmitting = false;
 
-  constructor(
-    private complianceService: ComplianceService,
-    private router: Router
-  ) {}
+  // 👇 Toast Notification State
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  private toastTimer: any;
+
+  private complianceService = inject(ComplianceService);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   onSubmit(): void {
-    if (!this.auditData.scope) {
-      alert('Scope is required!');
+    if (!this.auditData.scope || this.auditData.scope.trim().length === 0) {
+      this.showToast('Scope is required!', 'error');
       return;
     }
 
@@ -37,17 +40,33 @@ export class AuditformComponent {
 
     this.complianceService.createAudit(this.auditData).subscribe({
       next: (response) => {
-        console.log('✅ Audit created successfully:', response);
         this.isSubmitting = false;
-        // Navigate back to the audits table after saving
-        this.router.navigate(['/compliance/audits']); 
+        this.showToast('Audit created successfully!', 'success');
+        
+        // Brief delay before navigation so the user can see the success toast
+        setTimeout(() => {
+          this.router.navigate(['/compliance/audits']);
+        }, 1500);
       },
       error: (error) => {
         console.error('🔴 Failed to create audit:', error);
-        alert('Failed to save the audit.');
         this.isSubmitting = false;
+        this.showToast('Failed to save the audit. Please try again.', 'error');
       }
     });
+  }
+
+  // 👇 Helper for non-blocking notifications
+  private showToast(message: string, type: 'success' | 'error'): void {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.cdr.detectChanges();
+
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => {
+      this.toastMessage = '';
+      this.cdr.detectChanges();
+    }, 4000);
   }
 
   cancel(): void {

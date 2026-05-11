@@ -56,11 +56,10 @@
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">
               Assign Officer <span class="text-red-500">*</span>
             </label>
-            <select [(ngModel)]="formData.officerId"
-                    class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow cursor-pointer">
-              <option [ngValue]="0" disabled>Select officer…</option>
-              @for (o of availableOfficers; track o.id) {
-                <option [ngValue]="o.id">{{ o.name }}</option>
+            <select [(ngModel)]="formData.officerId" class="...">
+              <option [ngValue]="null" disabled>Select officer…</option>
+              @for (o of availableOfficers; track o.userId) {
+                <option [ngValue]="o.userId">{{ o.name }}</option>
               }
             </select>
           </div>

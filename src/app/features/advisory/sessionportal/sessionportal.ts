@@ -13,7 +13,6 @@ import { AdvisoryContent } from '../../../models/advisory.models';
 @Component({
   selector: 'app-session-portal',
   standalone: true,
-  // 👇 Updated imports
   imports: [CommonModule, ReactiveFormsModule, SidebarComponent, HeaderComponent],
   templateUrl: './sessionportal.html'
 })

@@ -93,6 +93,7 @@
 
 @if (isScheduleModalOpen) {
   <app-schedule-workshop-modal
+    [programId]="program.programId"
     (close)="closeScheduleModal()"
     (save)="handleScheduleWorkshop($event)">
   </app-schedule-workshop-modal>

@@ -2,15 +2,13 @@ import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { SidebarComponent } from '../../../features/shared/sidebar/sidebar';
-import { HeaderComponent } from '../../../features/shared/header/header';
 import { TrainingService } from '../../../core/services/training/training';
 import { WorkshopRequest } from '../../../models/training.models';
 
 @Component({
   selector: 'app-schedule-workshop-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, HeaderComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './scheduleworkshopmodal.html'
 })
 export class ScheduleworkshopmodalComponent implements OnInit {

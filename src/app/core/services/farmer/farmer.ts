@@ -9,7 +9,6 @@ import {
   AdvisoryContent
 } from '../../../models/farmer.models';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -18,13 +17,25 @@ export class FarmerService {
 
   constructor(private http: HttpClient) {}
 
-
   getFarmer(): Observable<Farmer> {
     return this.http.get<Farmer>(`${this.baseUrl}/farmers/profile`);
   }
 
-  getWorkshops(): Observable<Workshop[]> {
-    return this.http.get<Workshop[]>(`${this.baseUrl}/workshops/program/{programId}`);
+  // 👇 FIX: Pass the programId dynamically into the URL
+  getWorkshops(programId: number): Observable<Workshop[]> {
+    return this.http.get<Workshop[]>(`${this.baseUrl}/workshops/program/${programId}`);
+  }
+
+  getActiveWorkshops(): Observable<Workshop[]> {
+    return this.http.get<Workshop[]>(`${this.baseUrl}/workshops/active`);
+  }
+
+  // 👇 NEW: Register for a workshop
+  registerForWorkshop(workshopId: number): Observable<any> {
+    // The backend endpoint is expecting a ParticipationRequestDTO. 
+    // It grabs the Farmer ID from the token header automatically.
+    const payload = { workshopId: workshopId };
+    return this.http.post(`${this.baseUrl}/participations/register`, payload);
   }
 
   getDocuments(): Observable<Document[]> {

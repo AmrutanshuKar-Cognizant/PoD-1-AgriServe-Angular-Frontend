@@ -98,4 +98,13 @@ export class ContentLibraryComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  downloadResource(fileUri: string | undefined): void {
+    if (fileUri) {
+      // Opens the file link in a new browser tab
+      window.open(fileUri, '_blank');
+    } else {
+      console.warn('No file URI is attached to this resource.');
+    }
+  }
 }

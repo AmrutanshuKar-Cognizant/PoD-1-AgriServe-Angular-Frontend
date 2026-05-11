@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SidebarComponent } from '../../../features/shared/sidebar/sidebar';
 import { HeaderComponent } from '../../../features/shared/header/header';
 import { WorkshopListComponent }           from '../workshoplist/workshoplist';
@@ -14,7 +14,7 @@ import { Workshop, TrainingProgram, WorkshopRequest } from '../../../models/trai
   selector: 'app-programdetails',
   standalone: true,
   imports: [
-    CommonModule, DatePipe, RouterLink,
+    CommonModule, DatePipe,
     WorkshopListComponent,
     ScheduleworkshopmodalComponent,
     EditworkshopmodalComponent,
