@@ -1,0 +1,69 @@
+<div class="flex h-screen bg-gray-50">
+  
+  <app-sidebar></app-sidebar>
+
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    
+    <app-header></app-header>
+
+    <main class="flex-1 overflow-x-hidden overflow-y-auto">
+      <div class="max-w-[860px] mx-auto p-4 sm:p-6 lg:p-8">
+       
+        <div class="mb-6">
+          <h1 class="text-[22px] font-medium text-gray-900 mb-1 tracking-tight">Training Programs</h1>
+          <p class="text-[13px] text-gray-500">Browse and register for upcoming agricultural training programs.</p>
+        </div>
+       
+        <div *ngIf="loading" class="flex flex-col items-center justify-center py-16 px-6 bg-white border border-gray-200 rounded-lg text-center gap-3 shadow-sm">
+          <i class="ti ti-loader text-4xl text-gray-300 animate-spin" aria-hidden="true"></i>
+          <p class="text-sm font-medium text-gray-600">Loading training programs...</p>
+        </div>
+       
+        <div *ngIf="!loading && programs.length === 0" class="flex flex-col items-center justify-center py-16 px-6 bg-white border border-gray-200 rounded-lg text-center gap-3 shadow-sm">
+          <i class="ti ti-calendar-off text-4xl text-gray-300" aria-hidden="true"></i>
+          <p class="text-sm font-medium text-gray-600">No training programs available right now.</p>
+        </div>
+       
+        <div class="flex flex-col gap-3.5" *ngIf="!loading && programs.length > 0">
+          <div class="bg-white border border-gray-200 rounded-lg p-4 sm:p-5 transition-all hover:border-green-500 hover:shadow-sm" *ngFor="let p of programs">
+       
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <div class="flex-1 min-w-0 flex flex-col items-start gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 border rounded text-[11px] font-semibold uppercase tracking-wider" 
+                      [ngClass]="getStatusClass(p.status)">
+                  {{ p.status }}
+                </span>
+                <h3 class="text-[16px] font-medium text-gray-900 leading-tight">{{ p.title }}</h3>
+              </div>
+              
+              <button class="inline-flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0" 
+                      [disabled]="isRegisterDisabled(p)">
+                <i class="ti ti-circle-check text-sm" aria-hidden="true"></i>
+                {{ getRegisterLabel(p) }}
+              </button>
+            </div>
+       
+            <p class="text-[13px] text-gray-500 leading-relaxed mb-4">{{ p.description }}</p>
+       
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded px-2 py-1">
+                <i class="ti ti-calendar text-gray-400" aria-hidden="true"></i>
+                {{ formatDateRange(p.startDate, p.endDate) }}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded px-2 py-1" *ngIf="p.programId">
+                <i class="ti ti-id text-gray-400" aria-hidden="true"></i>
+                PRG-{{ p.programId }}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 border border-gray-200 rounded px-2 py-1" *ngIf="p.managerId">
+                <i class="ti ti-user-shield text-gray-400" aria-hidden="true"></i>
+                Manager: {{ p.managerId }}
+              </span>
+            </div>
+       
+          </div>
+        </div>
+       
+      </div>
+    </main>
+  </div>
+</div>
