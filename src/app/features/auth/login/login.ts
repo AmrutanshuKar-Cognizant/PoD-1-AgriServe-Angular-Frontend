@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core'; // 👈 Imported ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
@@ -20,11 +20,17 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // 👇 Injected ChangeDetectorRef here
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private cdr: ChangeDetectorRef 
+  ) {}
 
   onSubmit() {
     this.isLoading = true;
     this.errorMessage = '';
+    this.cdr.detectChanges(); // 👈 Force the UI to instantly show the loading spinner
 
     this.authService.login(this.loginData).subscribe({
       next: (response: any) => { 
@@ -41,7 +47,7 @@ export class LoginComponent {
           localStorage.setItem('user_role', response.role); 
         }
 
-        // 👇 2. NEW: Save the personal profile data!
+        // 2. Save the personal profile data
         if (response.name) {
           localStorage.setItem('name', response.name);
         }
@@ -54,6 +60,7 @@ export class LoginComponent {
 
         // 3. Stop the loading spinner
         this.isLoading = false;
+        this.cdr.detectChanges(); // 👈 Update the UI before navigating away
 
         // 4. Extract the role safely
         const userRole = response.role?.toUpperCase();
@@ -99,6 +106,7 @@ export class LoginComponent {
       error: (err: any) => { 
         this.isLoading = false;
         this.errorMessage = 'Invalid email or password. Please try again.';
+        this.cdr.detectChanges(); // 👈 Force the UI to instantly show the error message
         console.error('❌ Login error', err);
       }
     });

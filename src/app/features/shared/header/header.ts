@@ -40,6 +40,8 @@ export class HeaderComponent implements OnInit {
     // Admin
     { label: 'Admin Dashboard', route: '/admindashboard', allowedRoles: ['ADMIN'] },
     { label: 'Users', route: '/admin/users', allowedRoles: ['ADMIN'] },
+    { label: 'Documents', route: '/admin/documents', allowedRoles: ['ADMIN'] },
+
 
     // Extension Officer
     { label: 'Officer Dashboard', route: '/officerdashboard', allowedRoles: ['EXTENSIONOFFICER'] },

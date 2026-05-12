@@ -25,6 +25,7 @@ import { ContentUploadComponent } from './features/advisory/uploadcontent/upload
 import { ProgrammanagerdashboardComponent } from './features/training/programmanagerdashboard/programmanagerdashboard';
 import { ProgramdetailsComponent } from './features/training/programdetails/programdetails';
 import { AttendancedetailsComponent } from './features/training/attendancedetails/attendancedetails';
+import { DocumentapprovalComponent } from './features/admin/documentapproval/documentapproval';
 
 
 
@@ -73,6 +74,8 @@ export const routes: Routes = [
   { path: 'admin/users', component: AllUsersComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['ADMIN']} },
   { path: 'admin/users/add', component: AddUserFormComponent, 
+    canActivate: [authGuard, roleGuard], data: { roles: ['ADMIN']} },
+  { path: 'admin/documents', component: DocumentapprovalComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['ADMIN']} },
   
   // Extension Officer
