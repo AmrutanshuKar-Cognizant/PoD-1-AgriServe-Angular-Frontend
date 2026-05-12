@@ -40,74 +40,96 @@
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
       
-      <form class="space-y-6" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         
         <div class="grid grid-cols-1 gap-y-6 gap-x-6 sm:grid-cols-2">
           
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
             <div class="mt-1">
-              <input id="name" name="name" type="text" placeholder="John Doe" required
-                [(ngModel)]="registerData.name"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="name" formControlName="name" type="text" placeholder="John Doe"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['name'].touched && f['name'].invalid}">
+            </div>
+            <div *ngIf="f['name'].touched && f['name'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
+              <span *ngIf="f['name'].errors?.['minlength']">Name must be at least 2 characters.</span>
             </div>
           </div>
 
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
             <div class="mt-1">
-              <input id="email" name="email" type="email" placeholder="farm12@example.com" required
-                [(ngModel)]="registerData.email"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="email" formControlName="email" type="email" placeholder="farm12@example.com"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['email'].touched && f['email'].invalid}">
+            </div>
+            <div *ngIf="f['email'].touched && f['email'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
+              <span *ngIf="f['email'].errors?.['email']">Please enter a valid email address.</span>
             </div>
           </div>
 
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             <div class="mt-1">
-              <input id="password" name="password" type="password" placeholder="••••••••" required
-                [(ngModel)]="registerData.password"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="password" formControlName="password" type="password" placeholder="••••••••"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['password'].touched && f['password'].invalid}">
+            </div>
+            <div *ngIf="f['password'].touched && f['password'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['password'].errors?.['required']" class="block">Password is required.</span>
+              <span *ngIf="f['password'].errors?.['minlength']" class="block">Must be at least 8 characters.</span>
+              <span *ngIf="f['password'].errors?.['pattern']" class="block">Must include 1 uppercase, 1 lowercase, 1 number, and 1 symbol.</span>
             </div>
           </div>
 
           <div>
             <label for="contactInfo" class="block text-sm font-medium text-gray-700">Contact Number</label>
             <div class="mt-1">
-              <input id="contactInfo" name="contactInfo" type="tel" placeholder="94xxxxxxxx" required pattern="[0-9]{10}"
-                [(ngModel)]="registerData.contactInfo"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="contactInfo" formControlName="contactInfo" type="tel" placeholder="94xxxxxxxx"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['contactInfo'].touched && f['contactInfo'].invalid}">
+            </div>
+            <div *ngIf="f['contactInfo'].touched && f['contactInfo'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['contactInfo'].errors?.['required']">Contact number is required.</span>
+              <span *ngIf="f['contactInfo'].errors?.['pattern']">Must be a valid 10-digit number.</span>
             </div>
           </div>
 
           <div>
             <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
             <div class="mt-1">
-              <input id="dob" name="dob" type="date" required
-                [(ngModel)]="registerData.dob"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="dob" formControlName="dob" type="date"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['dob'].touched && f['dob'].invalid}">
+            </div>
+            <div *ngIf="f['dob'].touched && f['dob'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['dob'].errors?.['required']">Date of Birth is required.</span>
             </div>
           </div>
 
           <div>
             <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
             <div class="mt-1">
-              <select id="gender" name="gender" required
-                [(ngModel)]="registerData.gender"
-                class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <select id="gender" formControlName="gender"
+                class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['gender'].touched && f['gender'].invalid}">
                 <option value="" disabled selected>Select gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
               </select>
             </div>
+            <div *ngIf="f['gender'].touched && f['gender'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['gender'].errors?.['required']">Gender is required.</span>
+            </div>
           </div>
 
           <div>
             <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
             <div class="mt-1">
-              <input id="role" name="role" type="text" readonly
-                [(ngModel)]="registerData.role"
+              <input id="role" formControlName="role" type="text" readonly
                 class="appearance-none block w-full px-3 py-2 border border-gray-200 bg-gray-50 text-gray-500 rounded-md shadow-sm cursor-not-allowed sm:text-sm">
             </div>
           </div>
@@ -115,33 +137,46 @@
           <div class="sm:col-span-2">
             <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
             <div class="mt-1">
-              <input id="address" name="address" type="text" placeholder="123, ABC Nagar, XYZ - 123456" required
-                [(ngModel)]="registerData.address"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="address" formControlName="address" type="text" placeholder="123, ABC Nagar, XYZ - 123456"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['address'].touched && f['address'].invalid}">
+            </div>
+            <div *ngIf="f['address'].touched && f['address'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['address'].errors?.['required']">Address is required.</span>
+              <span *ngIf="f['address'].errors?.['minlength']">Address must be at least 10 characters long.</span>
             </div>
           </div>
 
           <div>
             <label for="landSize" class="block text-sm font-medium text-gray-700">Land Size</label>
             <div class="mt-1">
-              <input id="landSize" name="landSize" type="number" step="0.1" placeholder="in Acres/Hectares" required
-                [(ngModel)]="registerData.landSize"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="landSize" formControlName="landSize" type="number" step="0.1" placeholder="in Acres/Hectares"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['landSize'].touched && f['landSize'].invalid}">
+            </div>
+            <div *ngIf="f['landSize'].touched && f['landSize'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['landSize'].errors?.['required']">Land Size is required.</span>
+              <span *ngIf="f['landSize'].errors?.['min']">Must be a valid positive number.</span>
             </div>
           </div>
 
           <div>
             <label for="cropType" class="block text-sm font-medium text-gray-700">Primary Crop Type</label>
             <div class="mt-1">
-              <input id="cropType" name="cropType" type="text" placeholder="Paddy, Maize etc." required
-                [(ngModel)]="registerData.cropType"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <input id="cropType" formControlName="cropType" type="text" placeholder="Paddy, Maize etc."
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                [ngClass]="{'border-red-500': f['cropType'].touched && f['cropType'].invalid}">
+            </div>
+            <div *ngIf="f['cropType'].touched && f['cropType'].invalid" class="text-red-500 text-xs mt-1">
+              <span *ngIf="f['cropType'].errors?.['required']">Primary crop type is required.</span>
             </div>
           </div>
 
-        </div> <div class="pt-4">
+        </div> 
+        
+        <div class="pt-4">
           <button type="submit" [disabled]="isLoading || registerForm.invalid"
-            class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out disabled:opacity-50">
+            class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
             {{ isLoading ? 'Registering Account...' : 'Register Account' }}
           </button>
         </div>

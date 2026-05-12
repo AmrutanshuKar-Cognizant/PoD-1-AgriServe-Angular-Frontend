@@ -53,25 +53,7 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  // Deactivate Logic
-  onDeactivate(userId: number): void {
-    if (!confirm('Are you sure you want to deactivate this user? They will lose login access.')) return;
 
-    this.adminService.deactivateUser(userId).subscribe({
-      next: () => {
-        // Optimistically update UI
-        const userIndex = this.users.findIndex(u => u.userId === userId);
-        if (userIndex !== -1) {
-          this.users[userIndex].status = 'INACTIVE';
-          this.cdr.detectChanges();
-        }
-      },
-      error: (err) => {
-        console.error('Failed to deactivate user:', err);
-        alert('Failed to deactivate user. Check permissions.');
-      }
-    });
-  }
 
   // Delete Logic
   onDelete(userId: number): void {
@@ -79,7 +61,6 @@ export class AllUsersComponent implements OnInit {
 
     this.adminService.deleteUser(userId).subscribe({
       next: () => {
-        // Remove the user from the UI immediately
         this.users = this.users.filter(u => u.userId !== userId);
         this.cdr.detectChanges();
       },

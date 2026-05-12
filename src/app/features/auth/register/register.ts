@@ -1,67 +1,82 @@
-import { Component, ChangeDetectorRef } from '@angular/core'; // 👈 Import ChangeDetectorRef
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './register.html',
 })
-export class RegisterComponent {
-  registerData = {
-    name: '',
-    email: '',
-    contactInfo: '',
-    password: '',
-    role: 'Farmer',
-    dob: '',
-    gender: '',
-    address: '',
-    landSize: null as unknown as number, 
-    cropType: ''
-  };
-
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
   isLoading: boolean = false;
-  
   toastMessage: string = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
 
-  // 👇 Inject ChangeDetectorRef here
   constructor(
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef 
+    private cdr: ChangeDetectorRef
   ) {}
 
-  onSubmit() {
-    this.isLoading = true;
-    this.toastMessage = ''; 
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      contactInfo: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      ]],
+      role: ['Farmer', Validators.required],
+      dob: ['', Validators.required],
+      gender: ['', Validators.required],
+      address: ['', [Validators.required, Validators.minLength(10)]],
+      landSize: [null, [Validators.required, Validators.min(0.1)]],
+      cropType: ['', Validators.required]
+    });
+  }
 
-    this.authService.register(this.registerData).subscribe({
-      next: (response: any) => { 
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  onSubmit() {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading = true;
+    this.toastMessage = '';
+
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (response: any) => {
         this.handleSuccess();
       },
-      error: (err: any) => { 
+      error: (err: any) => {
         if (err.status === 201 || err.status === 200) {
           this.handleSuccess();
-          return; 
+          return;
         }
 
         this.isLoading = false;
         let parsedErrorMessage = 'Registration failed. Please try again.';
-        
+
         if (err.error && typeof err.error === 'object') {
-            const firstErrorKey = Object.keys(err.error)[0];
-            parsedErrorMessage = err.error[firstErrorKey] || parsedErrorMessage;
+          const firstErrorKey = Object.keys(err.error)[0];
+          parsedErrorMessage = err.error[firstErrorKey] || parsedErrorMessage;
         } else if (typeof err.error === 'string') {
-            parsedErrorMessage = err.error;
+          parsedErrorMessage = err.error;
         }
-        
-        this.showToast(parsedErrorMessage, 'error'); 
+
+        this.showToast(parsedErrorMessage, 'error');
       }
     });
   }
@@ -69,25 +84,24 @@ export class RegisterComponent {
   private handleSuccess() {
     this.isLoading = false;
     this.showToast('Registration Successful! Redirecting...', 'success');
-    
+
     setTimeout(() => {
       this.router.navigate(['/home']);
-    }, 2500); 
+    }, 2500);
   }
 
-  // 👇 Force the screen to update
   private showToast(message: string, type: 'success' | 'error') {
     this.toastMessage = message;
     this.toastType = type;
-    this.cdr.detectChanges(); // 👈 FORCES ANGULAR TO RENDER THE POPUP IMMEDIATELY
-    
+    this.cdr.detectChanges();
+
     if (this.toastTimer) clearTimeout(this.toastTimer);
-    
+
     if (type === 'error') {
       this.toastTimer = setTimeout(() => {
         this.toastMessage = '';
-        this.cdr.detectChanges(); // 👈 Updates the screen when hiding it
-      }, 4000); 
+        this.cdr.detectChanges();
+      }, 4000);
     }
   }
 }
