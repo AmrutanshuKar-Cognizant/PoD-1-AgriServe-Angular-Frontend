@@ -48,6 +48,9 @@ export class FarmerDashboardComponent implements OnInit {
         console.log('🟢 Farmer Data Received:', data);
         if (data) {
           this.farmer = data;
+          if (data.farmerId) {
+            sessionStorage.setItem('farmerId', data.farmerId.toString());
+          }
         }
         this.loading = false;
         this.cdr.detectChanges(); 

@@ -26,6 +26,7 @@ import { ProgrammanagerdashboardComponent } from './features/training/programman
 import { ProgramdetailsComponent } from './features/training/programdetails/programdetails';
 import { AttendancedetailsComponent } from './features/training/attendancedetails/attendancedetails';
 import { DocumentapprovalComponent } from './features/admin/documentapproval/documentapproval';
+import { FeedbackComponent } from './features/feedback/feedback';
 
 
 
@@ -66,6 +67,8 @@ export const routes: Routes = [
   { path: 'farmer/training', component: TrainingComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['FARMER']} },
   { path: 'farmer/advisorycontent', component: AdvisoryContentComponent, 
+    canActivate: [authGuard, roleGuard], data: { roles: ['FARMER']} },
+  { path: 'farmer/feedback', component: FeedbackComponent, 
     canActivate: [authGuard, roleGuard], data: { roles: ['FARMER']} },
 
   // Admin

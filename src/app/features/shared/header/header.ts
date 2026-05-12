@@ -51,7 +51,11 @@ export class HeaderComponent implements OnInit {
 
 
     // Program Manager
-    { label: 'Manager Dashboard', route: '/managerdashboard', allowedRoles: ['PROGRAMMANAGER'] }
+    { label: 'Manager Dashboard', route: '/managerdashboard', allowedRoles: ['PROGRAMMANAGER'] },
+    { label: ' Content Library ', route: '/manager/advisory/content', allowedRoles: ['PROGRAMMANAGER'] },
+    { label: ' Upload Content ', route: '/manager/advisory/upload', allowedRoles: ['PROGRAMMANAGER'] },
+
+
 
   ];
 

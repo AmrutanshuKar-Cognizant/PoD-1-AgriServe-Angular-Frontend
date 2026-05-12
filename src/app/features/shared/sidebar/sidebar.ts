@@ -32,7 +32,7 @@ export class SidebarComponent implements OnInit {
   private roleConfigMap: Record<string, RoleConfig> = {
     'FARMER': { display: 'Farmer', initials: 'FA' },
     'EXTENSIONOFFICER': { display: 'Extension Officer', initials: 'EO' },
-    'ADMIN': { display: 'System Administrator', initials: 'AD' },
+    'ADMIN': { display: 'Administrator', initials: 'AD' },
     'PROGRAMMANAGER': { display: 'Program Manager', initials: 'PM' },
     'COMPLIANCEOFFICER': { display: 'Compliance Officer', initials: 'CO' },
     'AUDITOR': { display: 'Auditor', initials: 'AU' }

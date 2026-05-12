@@ -1,25 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RegisterRequest, LoginRequest } from '../../../models/auth.models';
 
-// This matches your Spring Boot LoginRequestDTO
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  name: string;
-  email: string;
-  contactInfo: string;
-  password: string;
-  role: string;
-  dob: string;
-  gender: string;
-  address: string;
-  landSize: number;
-  cropType: string;
-}
 
 @Injectable({
   providedIn: 'root'

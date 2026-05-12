@@ -143,4 +143,13 @@ export class TrainingComponent implements OnInit {
     
     return 'bg-gray-50 text-gray-700 border-gray-200';
   }
+
+  isProgramCompleted(endDate: string | Date): boolean {
+    if (!endDate) return false;
+    
+    const programEnd = new Date(endDate);
+    const today = new Date();
+    
+    return today.getTime() > programEnd.getTime();
+  }
 }

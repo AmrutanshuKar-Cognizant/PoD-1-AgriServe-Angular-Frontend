@@ -45,6 +45,15 @@
                     <i class="ti ti-id text-gray-400" aria-hidden="true"></i>
                     PRG-{{ p.programId }}
                   </span>
+                  
+                  <button *ngIf="isProgramCompleted(p.endDate)" 
+                          routerLink="/farmer/feedback"
+                          (click)="$event.stopPropagation()"
+                          class="inline-flex items-center gap-1.5 ml-auto sm:ml-2 text-xs text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded px-3 py-1 font-bold transition-colors shadow-sm cursor-pointer">
+                    <i class="ti ti-message-star text-indigo-500 text-sm" aria-hidden="true"></i>
+                    Give Feedback
+                  </button>
+                  
                 </div>
               </div>
 

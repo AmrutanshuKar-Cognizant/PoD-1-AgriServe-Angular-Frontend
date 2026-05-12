@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 👈 Imported ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -15,12 +15,17 @@ import { HeaderComponent } from '../../shared/header/header';
 export class ContentUploadComponent implements OnInit {
   uploadForm!: FormGroup;
   isSubmitting = false;
-  errorMessage = '';
+
+  // 👇 Toast Notification State
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  private toastTimer: any;
 
   constructor(
     private fb: FormBuilder,
     private advisoryService: AdvisoryService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // 👈 Injected ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -41,14 +46,41 @@ export class ContentUploadComponent implements OnInit {
     }
 
     this.isSubmitting = true;
+    this.toastMessage = ''; // Clear previous messages
+    this.cdr.detectChanges(); // Force UI update
+
     this.advisoryService.createContent(this.uploadForm.value).subscribe({
       next: () => {
-        this.router.navigate(['/officer/advisory/content']);
+        this.isSubmitting = false;
+        this.showToast('Content uploaded successfully! Redirecting...', 'success');
+        
+        // Navigate away after 2 seconds
+        setTimeout(() => {
+          this.router.navigate(['/officer/advisory/content']);
+        }, 2000);
       },
       error: (err) => {
-        this.errorMessage = 'Failed to upload content. Please try again.';
+        console.error('Upload error:', err);
         this.isSubmitting = false;
+        this.showToast('Failed to upload content. Please try again.', 'error');
       }
     });
+  }
+
+  // 👇 Dynamic Toast Helper
+  private showToast(message: string, type: 'success' | 'error'): void {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.cdr.detectChanges(); // 👈 Guarantee instant UI render
+
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+
+    // Auto-hide the popup after 4 seconds (mostly useful for errors)
+    this.toastTimer = setTimeout(() => {
+      this.toastMessage = '';
+      this.cdr.detectChanges();
+    }, 4000);
   }
 }
