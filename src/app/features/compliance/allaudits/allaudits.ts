@@ -81,4 +81,9 @@ export class AllauditsComponent implements OnInit {
     // Assuming you registered it as 'auditform' in your app.routes.ts
     this.router.navigate(['/compliance/auditform']); 
   }
+
+  goToUpdateForm(audit: AuditDTO): void {
+    // We pass the selected audit object inside the "state" property
+    this.router.navigate(['/compliance/auditform'], { state: { auditData: audit } }); 
+  }
 }

@@ -60,7 +60,7 @@ export class FarmerDashboardComponent implements OnInit {
     });
 
     // 2. Fetch Upcoming Workshops
-    this.farmerService.getActiveWorkshops().subscribe({
+    this.farmerService.getMyWorkshops().subscribe({
       next: (data: any) => {
         if (Array.isArray(data)) {
           this.workshops = data;

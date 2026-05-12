@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core'; // 👈 Import ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -24,52 +24,70 @@ export class RegisterComponent {
     cropType: ''
   };
 
-  errorMessage: string = '';
   isLoading: boolean = false;
-  showSuccessPopup: boolean = false;
+  
+  toastMessage: string = '';
+  toastType: 'success' | 'error' = 'success';
+  private toastTimer: any;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // 👇 Inject ChangeDetectorRef here
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private cdr: ChangeDetectorRef 
+  ) {}
 
   onSubmit() {
     this.isLoading = true;
-    this.errorMessage = '';
+    this.toastMessage = ''; 
 
     this.authService.register(this.registerData).subscribe({
       next: (response: any) => { 
-        console.log('✅ Registration successful', response);
-        this.isLoading = false;
-        this.showSuccessPopup = true;
-
-        setTimeout(() => {
-          this.router.navigate(['/home']);
-        }, 2500); 
+        this.handleSuccess();
       },
       error: (err: any) => { 
-        
-        // 🚨 THE FIX: Catch the "Fake Error" caused by plain-text 201 responses
         if (err.status === 201 || err.status === 200) {
-          console.log('✅ Registration actually succeeded (Caught text response)');
-          this.isLoading = false;
-          this.showSuccessPopup = true;
-          
-          setTimeout(() => {
-            this.router.navigate(['/home']);
-          }, 2500); 
-          return; // Stop the rest of the error block from running!
+          this.handleSuccess();
+          return; 
         }
 
-        // --- Normal Error Handling Below ---
         this.isLoading = false;
+        let parsedErrorMessage = 'Registration failed. Please try again.';
         
         if (err.error && typeof err.error === 'object') {
             const firstErrorKey = Object.keys(err.error)[0];
-            this.errorMessage = err.error[firstErrorKey] || 'Invalid input. Please check your form.';
-        } else {
-            // Also updated this to handle plain text errors gracefully
-            this.errorMessage = typeof err.error === 'string' ? err.error : 'Registration failed. Please try again.';
+            parsedErrorMessage = err.error[firstErrorKey] || parsedErrorMessage;
+        } else if (typeof err.error === 'string') {
+            parsedErrorMessage = err.error;
         }
-        console.error('❌ Registration error', err);
+        
+        this.showToast(parsedErrorMessage, 'error'); 
       }
     });
+  }
+
+  private handleSuccess() {
+    this.isLoading = false;
+    this.showToast('Registration Successful! Redirecting...', 'success');
+    
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 2500); 
+  }
+
+  // 👇 Force the screen to update
+  private showToast(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.cdr.detectChanges(); // 👈 FORCES ANGULAR TO RENDER THE POPUP IMMEDIATELY
+    
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    
+    if (type === 'error') {
+      this.toastTimer = setTimeout(() => {
+        this.toastMessage = '';
+        this.cdr.detectChanges(); // 👈 Updates the screen when hiding it
+      }, 4000); 
+    }
   }
 }

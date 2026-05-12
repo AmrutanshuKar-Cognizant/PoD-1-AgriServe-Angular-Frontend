@@ -26,14 +26,11 @@ export class FarmerService {
     return this.http.get<Workshop[]>(`${this.baseUrl}/workshops/program/${programId}`);
   }
 
-  getActiveWorkshops(): Observable<Workshop[]> {
-    return this.http.get<Workshop[]>(`${this.baseUrl}/workshops/active`);
+  getMyWorkshops(): Observable<Workshop[]> {
+    return this.http.get<Workshop[]>(`${this.baseUrl}/participations/my-workshops`);  
   }
 
-  // 👇 NEW: Register for a workshop
   registerForWorkshop(workshopId: number): Observable<any> {
-    // The backend endpoint is expecting a ParticipationRequestDTO. 
-    // It grabs the Farmer ID from the token header automatically.
     const payload = { workshopId: workshopId };
     return this.http.post(`${this.baseUrl}/participations/register`, payload);
   }

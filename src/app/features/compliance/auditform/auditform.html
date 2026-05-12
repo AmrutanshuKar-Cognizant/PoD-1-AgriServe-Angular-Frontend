@@ -2,7 +2,9 @@
   <div class="w-full max-w-2xl bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
     
     <div class="px-8 py-6 border-b border-gray-100 bg-gray-50/50">
-      <h2 class="text-2xl font-bold text-gray-900">Create New Audit</h2>
+      <h2 class="text-2xl font-bold text-gray-900">
+        {{ isUpdateMode ? 'Update Audit Record' : 'Create New Audit' }}
+      </h2>
       <p class="text-sm text-gray-500 mt-1">Fill out the details below to schedule or record a new audit.</p>
     </div>
 
@@ -48,12 +50,9 @@
           class="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
           Cancel
         </button>
-        <button 
-          type="submit" 
-          [disabled]="isSubmitting"
-          class="px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
-          <span *ngIf="isSubmitting" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
-          {{ isSubmitting ? 'Saving...' : 'Save Audit' }}
+        <button type="submit" [disabled]="isSubmitting" ...>
+          <span *ngIf="isSubmitting" class="...">...</span>
+          {{ isSubmitting ? 'Saving...' : (isUpdateMode ? 'Update Audit' : 'Save Audit') }}
         </button>
       </div>
 

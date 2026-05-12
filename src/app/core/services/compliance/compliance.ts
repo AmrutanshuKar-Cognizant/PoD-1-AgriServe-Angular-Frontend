@@ -57,4 +57,8 @@ export class ComplianceService {
   getAllAudits(): Observable<AuditDTO[]> {
     return this.http.get<AuditDTO[]>(`${this.baseUrl}/audits`);
   }
+
+  updateAudit(auditId: number, payload: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/audits/${auditId}`, payload);
+  }
 }
