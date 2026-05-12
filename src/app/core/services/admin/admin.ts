@@ -28,11 +28,6 @@ export class AdminService {
     return this.http.post(`${this.baseUrl}/users`, userData);
   }  
 
-  // Deactivate User
-  deactivateUser(userId: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/users/${userId}/deactivate`, {}, { headers: this.getHeaders() });
-  }
-
   // Delete User
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/users/${userId}`, { headers: this.getHeaders() });

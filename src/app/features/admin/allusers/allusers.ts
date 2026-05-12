@@ -101,13 +101,7 @@ export class AllUsersComponent implements OnInit {
     if (s === 'PENDING') return 'bg-amber-100 text-amber-800';
     
     return 'bg-gray-100 text-gray-800';
-  }
-
-  // Safe Deactivate Check (Moves logic out of HTML)
-  canDeactivate(status: string | null | undefined): boolean {
-    if (!status) return true; // If status is null, allow deactivation
-    return status.toUpperCase() !== 'INACTIVE';
-  }
+  }  
 
   // Safe Active Dot Check
   isActive(status: string | null | undefined): boolean {
