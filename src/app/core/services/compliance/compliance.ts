@@ -11,12 +11,9 @@ import {
 } from '../../../models/compliance.models';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ComplianceService {
   
-  // NOTE: Change this to match your actual Spring Boot / API Gateway URL
   private baseUrl = 'http://localhost:8081/api'; 
 
   constructor(private http: HttpClient) {}
@@ -28,7 +25,6 @@ export class ComplianceService {
 
   // GET: Fetch Training Programs
   getTrainingPrograms(): Observable<TrainingProgramDTO[]> {
-    // Update the URL to wherever your Training Service endpoints live
     return this.http.get<TrainingProgramDTO[]>('http://localhost:8081/api/programs');
   }
 
@@ -49,7 +45,6 @@ export class ComplianceService {
 
   // POST: Submit a new Audit
   createAudit(payload: AuditPayload): Observable<any> {
-    // Make sure this matches your Spring Boot endpoint for creating audits!
     return this.http.post(`${this.baseUrl}/audits`, payload); 
   }
 

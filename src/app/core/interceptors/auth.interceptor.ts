@@ -4,7 +4,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Grab the token from Local Storage
   const token = localStorage.getItem('jwt_token'); 
 
-  // If a token exists, clone the request and attach the Authorization header
+  // Clone the request and attach the Authorization header
   if (token) {
     const clonedRequest = req.clone({
       setHeaders: {
@@ -15,6 +15,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(clonedRequest);
   }
 
-  // If no token exists (like when logging in), just send the normal request
+  // If no token exists just send the normal request
   return next(req);
 };
